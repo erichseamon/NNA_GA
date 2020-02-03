@@ -3,13 +3,13 @@ title: "NNA GA Prototype Review"
 author: "Erich Seamon"
 date: "September 2019"
 output:
-  pdf_document: default
   html_document:
     code_folding: hide
     highlight: textmate
     theme: united
     toc: true
     toc_float: true
+  pdf_document: default
 params: null
 mainfont: serif
 ---
@@ -61,7 +61,7 @@ usePackage <- function(p) {
 
 ## Rastrigin Function Plotted in 3d
 
-Here we construct the function and plot in 3 dimensions.
+Here we construct the function and plot in 3 dimensions.  Please note the numerous local minima that surround the global minima in the center of the function.  The purpose of using a GA is to discern these minima.  While this example attempts to find the global minima - the process of diserning between local and global is an important facet to identify spatial micropatterns within a t=1 function. A t+n/time series prepresentation will likelyr require a combinatory approach of GA runs which are associated (e.g. island-model distributed GA methods).
 
 ```{r message = FALSE, warning = FALSE, fig.width = 8, fig.height = 8}
 
@@ -96,7 +96,11 @@ filled.contour(x1, x2, f, color.palette = bl2gr.colors)
 
 ## Construction of a monitoring function and running of GA over 100 iterations
 
-Here we set up a monitoring function which generates an animation of our GA run from each of the iterations.  In addition, we plot the iterations based on their fitness function prediction vs. the optimum function plot.
+Here we run our GA across 100 iterations, using a sample of 50 observations/individuals. The output graph plots the iteration number - a fitness function prediction vs. the suggested solution.
+
+In addition, we construct a monitoring function which generates an animation of our GA run or each of the iterations.  The monitoring function constructs a .pdf of each 2-d representation of the GA.  When animated, we see how the algorithm attempts to converge on the global minima across a test number of 100 iterations.
+
+
 
 ```{r chunk-label, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 8}
 
@@ -145,3 +149,20 @@ The summary output of our GA run provides the number of observation, iterations,
 summary(GA)
 
 ```
+
+
+## Summary and Takeaways
+
+This basic example provides a very simple examination of a GA and its evaluation using a known optimization function.  Some key issues to address in a process with actual climatic/biological/geophysical data:
+
+1. Construction/determination of an appropriate fitness function.  A key aspect will be to effectively zero in on what an initial fitness function will be.  In order for the GA to attempt to optimize solution inputs, we need to have a representative fitness function, either thru historical outputs, stakeholder input, or another previously-evaluated output that is an acceptable view of the problem set.
+
+2. Inputs.  Scientifically validated inputs with apriori knowledge of the suggested solution.
+
+3. Issues of time.  While this example picks a single point in time - our efforts will involve time series data.  An adaptive modeling effort will need to be established is a distributed and/or parallel manner (e.g. associated GA runs).
+
+4. Comparisons of outcomes between regional landscapes.
+
+5. GA performance. Because a given problem depends on its control parameters, choosing the wrong set of parameters could lead to unacceptable results. 
+
+
